@@ -1,6 +1,6 @@
 {
-    "name": "fl",
-    "short_name": "fl",
+    "name": "Today and Tomorrow",
+    "short_name": "TT",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

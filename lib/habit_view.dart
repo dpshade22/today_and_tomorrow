@@ -84,23 +84,60 @@ class _HabitViewState extends State<HabitView> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                RichText(
-                  text: const TextSpan(
-                    text: 'Habits ',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                Column(
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                          text: 'Habits ',
+                          style: DefaultTextStyle.of(context).style,
+                          children: [
+                            TextSpan(
+                                text: _habits[index].name,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold))
+                          ]),
+                    ),
+                    RichText(
+                        text: TextSpan(
+                            text: _habits[index].name,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold))),
+                    Text('Level ${levelFormula(_habits[index].counter)}'),
+                  ],
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child:
+                            Text('Completed ${_habits[index].counter} times'),
+                      ),
+                    ],
                   ),
                 ),
-                RichText(
-                    text: TextSpan(
-                        text: _habits[index].name,
-                        style: const TextStyle(fontWeight: FontWeight.bold))),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Completed ${_habits[index].counter} times'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Level ${levelFormula(_habits[index].counter)}'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: OutlinedButton(
+                          child: const Text("Delete"),
+                          style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.red),
+                          ),
+                          onPressed: () {
+                            _delHabit(index);
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),
