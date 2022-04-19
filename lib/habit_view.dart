@@ -23,18 +23,24 @@ class _HabitViewState extends State<HabitView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Today and Tomorrow'),
-        backgroundColor: const Color.fromRGBO(241, 81, 82, 1),
-      ),
-      body: Stack(
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text("You are level 21"),
-          ),
-          cardsOfHabits(),
-        ],
+      // appBar: AppBar(
+      //   title: const Text('Today and Tomorrow'),
+      //   backgroundColor: const Color.fromRGBO(241, 81, 82, 1),
+      // ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 0,
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(
+                    'https://yt3.ggpht.com/yti/APfAmoFSPpEpJTAhDcDO0S8-p9dtKNhSyXMvABH7eoNO0_c=s88-c-k-c0x00ffffff-no-rj-mo'),
+              ),
+            ),
+            RichText(text: const TextSpan(text: "Habits")),
+            cardsOfHabits(),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         // When the user presses the button, show an alert dialog containing
@@ -49,27 +55,33 @@ class _HabitViewState extends State<HabitView> {
     );
   }
 
-  ListView cardsOfHabits() {
-    return ListView.builder(
-        itemCount: _habits.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: ListTile(
-              title: Text(
-                  '${_habits[index].name} at level ${_habits[index].level}'),
-              leading: IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () => _updateCounter(index),
-                focusColor: Colors.green,
-              ),
-              onLongPress: () => showHabitAlert(index),
-              onTap: () =>
-                  // showHabitAlert(index)
-                  showHabitModal(context, index),
-              trailing: Text(numToPercents(_habits[index].counter, index)),
-            ),
-          );
-        });
+  Expanded cardsOfHabits() {
+    return Expanded(
+      child: SizedBox(
+        height: 200.0,
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: _habits.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                child: ListTile(
+                  title: Text(
+                      '${_habits[index].name} at level ${_habits[index].level}'),
+                  leading: IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () => _updateCounter(index),
+                    focusColor: Colors.green,
+                  ),
+                  onLongPress: () => showHabitAlert(index),
+                  onTap: () =>
+                      // showHabitAlert(index)
+                      showHabitModal(context, index),
+                  trailing: Text(numToPercents(_habits[index].counter, index)),
+                ),
+              );
+            }),
+      ),
+    );
   }
 
   Future<void> showHabitModal(BuildContext context, int index) {
